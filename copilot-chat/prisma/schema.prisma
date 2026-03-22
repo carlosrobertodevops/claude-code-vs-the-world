@@ -1,0 +1,307 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  MANAGER
+  EMPLOYEE
+}
+
+enum StockMovementType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum ContractStatus {
+  DRAFT
+  PENDING_SIGNATURE
+  SIGNED
+  CANCELLED
+}
+
+enum ServiceOrderStatus {
+  WAITING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id           String         @id @default(cuid())
+  name         String
+  email        String         @unique
+  passwordHash String         @map("password_hash")
+  role         Role           @default(EMPLOYEE)
+  phone        String?
+  isActive     Boolean        @default(true) @map("is_active")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+
+  stockMovements StockMovement[]
+  serviceOrders  ServiceOrder[]
+
+  @@index([role])
+  @@map("users")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String
+  cpfCnpj   String?  @map("cpf_cnpj")
+  address   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  vehicles      Vehicle[]
+  quotes        Quote[]
+  contracts     Contract[]
+  serviceOrders ServiceOrder[]
+
+  @@index([phone])
+  @@index([cpfCnpj])
+  @@map("customers")
+}
+
+model Vehicle {
+  id         String   @id @default(cuid())
+  customerId String   @map("customer_id")
+  plate      String   @unique
+  brand      String
+  model      String
+  year       Int?
+  color      String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  customer      Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  photos        VehiclePhoto[]
+  serviceOrders ServiceOrder[]
+
+  @@index([customerId])
+  @@map("vehicles")
+}
+
+model VehiclePhoto {
+  id        String   @id @default(cuid())
+  vehicleId String   @map("vehicle_id")
+  url       String
+  caption   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+
+  @@map("vehicle_photos")
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  unit         String   @default("un")
+  currentStock Float    @default(0) @map("current_stock")
+  minimumStock Float    @default(0) @map("minimum_stock")
+  costPrice    Float    @default(0) @map("cost_price")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  stockMovements    StockMovement[]
+  serviceOrderItems ServiceOrderItem[]
+
+  @@map("products")
+}
+
+model StockMovement {
+  id        String            @id @default(cuid())
+  productId String            @map("product_id")
+  userId    String            @map("user_id")
+  type      StockMovementType
+  quantity  Float
+  unitCost  Float?            @map("unit_cost")
+  notes     String?
+  createdAt DateTime          @default(now()) @map("created_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("stock_movements")
+}
+
+model ServiceType {
+  id               String   @id @default(cuid())
+  name             String
+  basePrice        Float    @map("base_price")
+  estimatedMinutes Int      @default(30) @map("estimated_minutes")
+  isActive         Boolean  @default(true) @map("is_active")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  quoteItems        QuoteItem[]
+  serviceOrderItems ServiceOrderItem[]
+
+  @@map("service_types")
+}
+
+model Quote {
+  id          String      @id @default(cuid())
+  customerId  String      @map("customer_id")
+  quoteNumber String      @unique @map("quote_number")
+  status      QuoteStatus @default(DRAFT)
+  totalAmount Float       @default(0) @map("total_amount")
+  notes       String?
+  validUntil  DateTime?   @map("valid_until")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  customer Customer    @relation(fields: [customerId], references: [id])
+  items    QuoteItem[]
+
+  @@map("quotes")
+}
+
+model QuoteItem {
+  id            String  @id @default(cuid())
+  quoteId       String  @map("quote_id")
+  serviceTypeId String  @map("service_type_id")
+  quantity      Int     @default(1)
+  unitPrice     Float   @map("unit_price")
+  discount      Float   @default(0)
+  subtotal      Float
+
+  quote       Quote       @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  serviceType ServiceType @relation(fields: [serviceTypeId], references: [id])
+
+  @@map("quote_items")
+}
+
+model Contract {
+  id             String         @id @default(cuid())
+  customerId     String         @map("customer_id")
+  contractNumber String         @unique @map("contract_number")
+  status         ContractStatus @default(DRAFT)
+  title          String
+  content        String         @db.Text
+  signatureData  String?        @map("signature_data") @db.Text
+  signatureIp    String?        @map("signature_ip")
+  signedAt       DateTime?      @map("signed_at")
+  pdfUrl         String?        @map("pdf_url")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  @@map("contracts")
+}
+
+model ServiceOrder {
+  id          String             @id @default(cuid())
+  customerId  String             @map("customer_id")
+  vehicleId   String             @map("vehicle_id")
+  employeeId  String?            @map("employee_id")
+  orderNumber String             @unique @map("order_number")
+  status      ServiceOrderStatus @default(WAITING)
+  totalAmount Float              @default(0) @map("total_amount")
+  notes       String?
+  startedAt   DateTime?          @map("started_at")
+  completedAt DateTime?          @map("completed_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+
+  customer Customer           @relation(fields: [customerId], references: [id])
+  vehicle  Vehicle             @relation(fields: [vehicleId], references: [id])
+  employee User?               @relation(fields: [employeeId], references: [id])
+  items    ServiceOrderItem[]
+  photos   ServicePhoto[]
+  queue    QueueEntry?
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([employeeId])
+  @@index([vehicleId])
+  @@map("service_orders")
+}
+
+model ServiceOrderItem {
+  id             String  @id @default(cuid())
+  serviceOrderId String  @map("service_order_id")
+  serviceTypeId  String? @map("service_type_id")
+  productId      String? @map("product_id")
+  description    String
+  quantity       Float   @default(1)
+  unitPrice      Float   @map("unit_price")
+  subtotal       Float
+
+  serviceOrder ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+  serviceType  ServiceType? @relation(fields: [serviceTypeId], references: [id])
+  product      Product?     @relation(fields: [productId], references: [id])
+
+  @@map("service_order_items")
+}
+
+model ServicePhoto {
+  id             String   @id @default(cuid())
+  serviceOrderId String   @map("service_order_id")
+  url            String
+  caption        String?
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  serviceOrder ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+
+  @@map("service_photos")
+}
+
+model QueueEntry {
+  id             String    @id @default(cuid())
+  serviceOrderId String    @unique @map("service_order_id")
+  position       Int
+  estimatedStart DateTime? @map("estimated_start")
+  estimatedEnd   DateTime? @map("estimated_end")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  serviceOrder ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+
+  @@index([position])
+  @@map("queue_entries")
+}
+
+model CarWashConfig {
+  id                  String   @id @default(cuid())
+  businessName        String   @map("business_name")
+  slug                String   @unique
+  simultaneousSlots   Int      @default(2) @map("simultaneous_slots")
+  phone               String?
+  address             String?
+  logoUrl             String?  @map("logo_url")
+  publicQueueEnabled  Boolean  @default(true) @map("public_queue_enabled")
+  defaultMessage      String?  @map("default_message")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("car_wash_configs")
+}
+
+model FileUpload {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String   @map("original_name")
+  mimeType     String   @map("mime_type")
+  size         Int
+  url          String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("file_uploads")
+}

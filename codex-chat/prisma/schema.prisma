@@ -1,0 +1,293 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  MANAGER
+  EMPLOYEE
+}
+
+enum StockMovementType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum ContractStatus {
+  DRAFT
+  PENDING_SIGNATURE
+  SIGNED
+  CANCELLED
+}
+
+enum ServiceOrderStatus {
+  WAITING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id             String          @id @default(cuid())
+  name           String
+  email          String          @unique
+  passwordHash   String
+  role           UserRole
+  phone          String?
+  isActive       Boolean         @default(true)
+  stockMovements StockMovement[]
+  serviceOrders  ServiceOrder[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([role])
+}
+
+model Customer {
+  id                  String               @id @default(cuid())
+  name                String
+  email               String?
+  phone               String?
+  cpfCnpj             String?              @unique
+  address             String?
+  loyaltyPoints       Int                  @default(0)
+  whatsappOptIn       Boolean              @default(true)
+  vehicles            Vehicle[]
+  quotes              Quote[]
+  contracts           Contract[]
+  serviceOrders       ServiceOrder[]
+  loyaltyTransactions LoyaltyTransaction[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([phone])
+}
+
+model Vehicle {
+  id            String         @id @default(cuid())
+  customerId    String
+  plate         String         @unique
+  brand         String
+  model         String
+  year          Int
+  color         String
+  customer      Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  photos        VehiclePhoto[]
+  serviceOrders ServiceOrder[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([customerId])
+}
+
+model VehiclePhoto {
+  id        String   @id @default(cuid())
+  vehicleId String
+  url       String
+  caption   String?
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id              String           @id @default(cuid())
+  name            String
+  unit            String
+  currentStock    Decimal          @db.Decimal(10, 2)
+  minimumStock    Decimal          @db.Decimal(10, 2)
+  costPrice       Decimal          @db.Decimal(10, 2)
+  isActive        Boolean          @default(true)
+  stockMovements  StockMovement[]
+  serviceOrderItems ServiceOrderItem[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([name])
+}
+
+model StockMovement {
+  id        String            @id @default(cuid())
+  productId String
+  userId    String
+  type      StockMovementType
+  quantity  Decimal           @db.Decimal(10, 2)
+  unitCost  Decimal?          @db.Decimal(10, 2)
+  note      String?
+  product   Product           @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  createdAt DateTime          @default(now())
+
+  @@index([productId, createdAt])
+}
+
+model ServiceType {
+  id               String             @id @default(cuid())
+  name             String             @unique
+  basePrice        Decimal            @db.Decimal(10, 2)
+  estimatedMinutes Int
+  isActive         Boolean            @default(true)
+  quoteItems       QuoteItem[]
+  serviceOrderItems ServiceOrderItem[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model Quote {
+  id          String      @id @default(cuid())
+  customerId  String
+  quoteNumber String      @unique
+  status      QuoteStatus @default(DRAFT)
+  notes       String?
+  totalAmount Decimal     @db.Decimal(10, 2)
+  expiresAt   DateTime?
+  pdfUrl      String?
+  customer    Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  items       QuoteItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([status])
+}
+
+model QuoteItem {
+  id            String      @id @default(cuid())
+  quoteId       String
+  serviceTypeId String
+  quantity      Decimal     @db.Decimal(10, 2)
+  unitPrice     Decimal     @db.Decimal(10, 2)
+  discount      Decimal     @default(0) @db.Decimal(10, 2)
+  subtotal      Decimal     @db.Decimal(10, 2)
+  quote         Quote       @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  serviceType   ServiceType @relation(fields: [serviceTypeId], references: [id], onDelete: Restrict)
+}
+
+model Contract {
+  id            String         @id @default(cuid())
+  customerId    String
+  contractNumber String        @unique
+  status        ContractStatus @default(DRAFT)
+  title         String
+  content       String
+  signatureData String?
+  signatureIp   String?
+  signedAt      DateTime?
+  pdfUrl        String?
+  customer      Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([status])
+}
+
+model ServiceOrder {
+  id            String             @id @default(cuid())
+  customerId    String
+  vehicleId     String
+  employeeId    String?
+  orderNumber   String             @unique
+  status        ServiceOrderStatus @default(WAITING)
+  totalAmount   Decimal            @db.Decimal(10, 2)
+  startedAt     DateTime?
+  completedAt   DateTime?
+  notes         String?
+  customer      Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  vehicle       Vehicle            @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
+  employee      User?              @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  items         ServiceOrderItem[]
+  photos        ServicePhoto[]
+  queueEntry    QueueEntry?
+  loyaltyTransactions LoyaltyTransaction[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([status, createdAt])
+  @@index([employeeId])
+  @@index([vehicleId])
+}
+
+model ServiceOrderItem {
+  id             String       @id @default(cuid())
+  serviceOrderId String
+  serviceTypeId  String?
+  productId      String?
+  description    String
+  quantity       Decimal      @db.Decimal(10, 2)
+  unitPrice      Decimal      @db.Decimal(10, 2)
+  subtotal       Decimal      @db.Decimal(10, 2)
+  serviceOrder   ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+  serviceType    ServiceType? @relation(fields: [serviceTypeId], references: [id], onDelete: SetNull)
+  product        Product?     @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
+
+model ServicePhoto {
+  id             String       @id @default(cuid())
+  serviceOrderId String
+  url            String
+  caption        String?
+  serviceOrder   ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+}
+
+model QueueEntry {
+  id             String       @id @default(cuid())
+  serviceOrderId String       @unique
+  position       Int
+  estimatedStart DateTime?
+  estimatedEnd   DateTime?
+  serviceOrder   ServiceOrder @relation(fields: [serviceOrderId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([position])
+}
+
+model CarWashConfig {
+  id                  String   @id @default(cuid())
+  businessName        String
+  slug                String   @unique
+  simultaneousSlots   Int      @default(2)
+  phone               String?
+  address             String?
+  logoUrl             String?
+  primaryColor        String   @default("#0f172a")
+  queueRefreshSeconds Int      @default(30)
+  loyaltyEnabled      Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model FileUpload {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  createdAt    DateTime @default(now())
+}
+
+model LoyaltyTransaction {
+  id             String        @id @default(cuid())
+  customerId     String
+  serviceOrderId String?
+  points         Int
+  type           String
+  description    String?
+  customer       Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  serviceOrder   ServiceOrder? @relation(fields: [serviceOrderId], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+
+  @@index([customerId, createdAt])
+}
