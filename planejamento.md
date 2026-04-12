@@ -2,13 +2,16 @@
 
 ## Contexto
 
-Aplicacao micro-SaaS para gestao de lava-jatos. O objetivo e criar uma plataforma completa que cubra as operacoes diarias de um lava-jato: controle de estoque, orcamentos, contratos, ordens de servico, fila de atendimento publica e relatorios. O projeto deve ser simples, porem abrangente, e estar pronto para producao.
+Aplicacao micro-SaaS para gestao de lava-jatos. O objetivo e criar uma plataforma completa que cubra as operacoes diarias de um lava-jato:
+controle de estoque, orcamentos, contratos, ordens de servico, fila de atendimento publica e relatorios.
+O projeto deve ser simples, porem abrangente, e estar pronto para producao.
 
 ---
 
 ## Nome do Projeto
 
 O implementador deve escolher um nome criativo e memoravel para o projeto. O nome sera usado em:
+
 - `package.json` (name)
 - Titulo da aplicacao (header, login page, browser tab)
 - Seed data (nome do lava-jato de demonstracao)
@@ -39,23 +42,26 @@ O implementador deve justificar brevemente a escolha no README.
 
 ## Tech Stack
 
-| Camada | Tecnologia | Justificativa |
-|---|---|---|
-| Framework | Next.js 15 (App Router) | Full-stack em um projeto, SSR, API Routes, versao estavel |
-| Linguagem | TypeScript 5 | Type safety ponta a ponta |
-| Banco | PostgreSQL 17 | Robusto para dados de negocio |
-| ORM | Prisma 7 | Migrations, seeding, tipos gerados |
-| Auth | NextAuth v5 (Auth.js) | Integrado ao Next.js, JWT, roles |
-| Validacao | Zod 4 | Schemas compartilhados frontend/backend |
-| UI | Tailwind CSS 4 + shadcn/ui | Desenvolvimento rapido, componentes acessiveis |
-| Data Fetching | TanStack React Query 5 | Cache, optimistic updates |
-| Forms | React Hook Form + Zod | Forms performaticos com validacao |
-| Upload | Local (dev) / S3-compatible via MinIO (prod) | Abstraction layer |
-| PDF | @react-pdf/renderer | Contratos e orcamentos |
-| Graficos | Recharts | Relatorios |
-| Container | Docker + Docker Compose | Deploy simplificado |
+| Camada        | Tecnologia                                   | Justificativa                                             |
+| ------------- | -------------------------------------------- | --------------------------------------------------------- |
+| Framework     | Next.js 15 (App Router)                      | Full-stack em um projeto, SSR, API Routes, versao estavel |
+| Pacote        | Bun                                          | Mais rápido e fácil que NPM, pnpm                         |
+| API           | Elysia                                       | Melhor que fastify, Express e nestjs                      |
+| Linguagem     | TypeScript 5                                 | Type safety ponta a ponta                                 |
+| Banco         | PostgreSQL 17                                | Robusto para dados de negocio                             |
+| ORM           | Prisma 7                                     | Migrations, seeding, tipos gerados                        |
+| Auth          | NextAuth v5 (Auth.js)                        | Integrado ao Next.js, JWT, roles                          |
+| Validacao     | Zod 4                                        | Schemas compartilhados frontend/backend                   |
+| UI            | Tailwind CSS 4 + shadcn/ui                   | Desenvolvimento rapido, componentes acessiveis            |
+| Data Fetching | TanStack React Query 5                       | Cache, optimistic updates                                 |
+| Forms         | React Hook Form + Zod                        | Forms performaticos com validacao                         |
+| Upload        | Local (dev) / S3-compatible via MinIO (prod) | Abstraction layer                                         |
+| PDF           | @react-pdf/renderer                          | Contratos e orcamentos                                    |
+| Graficos      | Recharts                                     | Relatorios                                                |
+| Container     | Docker + Docker Compose                      | Deploy simplificado                                       |
 
 **Decisoes chave**:
+
 - Monolito Next.js (nao microservicos). Adequado para a escala de um micro-SaaS.
 - Codigo fonte em ingles (variaveis, funcoes, comentarios). UI em portugues brasileiro.
 - Features extras serao escolhidas pelo implementador (ver secao acima).
@@ -160,6 +166,7 @@ projeto/
 - **FileUpload**: id, filename, originalName, mimeType, size, url
 
 ### Indexes importantes
+
 - users: email, role
 - customers: phone, cpfCnpj
 - vehicles: plate (unique), customerId
@@ -168,21 +175,24 @@ projeto/
 
 ---
 
-## API Design
+## API Design com o Elysia
 
 Formato padrao de resposta:
+
 ```
 Sucesso: { success: true, data: T, meta?: { page, limit, total, totalPages } }
 Erro:    { success: false, error: { code, message, details? } }
 ```
 
 ### Rotas publicas (sem auth)
+
 - `POST /api/auth/[...nextauth]` - Login/logout
 - `GET /api/fila/publica/[slug]` - Fila publica
 - `POST /api/contratos/[id]/assinar` - Assinatura de contrato
 - `GET /fila/[slug]` - Pagina publica de fila
 
 ### Rotas autenticadas (Employee + Manager)
+
 - `/api/inventario` - CRUD produtos + movimentacoes de estoque
 - `/api/orcamentos` - CRUD orcamentos + itens + PDF
 - `/api/servicos` - CRUD ordens de servico + mudanca de status + fotos
@@ -191,6 +201,7 @@ Erro:    { success: false, error: { code, message, details? } }
 - `/api/upload` - Upload de arquivos
 
 ### Rotas somente Manager
+
 - `/api/funcionarios` - CRUD funcionarios
 - `/api/contratos` - CRUD contratos
 - `/api/relatorios/*` - Faturamento, inventario, servicos, clientes
@@ -204,7 +215,7 @@ Erro:    { success: false, error: { code, message, details? } }
 2. URL publica: `dominio.com/fila/lava-jato-centro`
 3. Ao criar um ServiceOrder com status WAITING, um QueueEntry e criado
 4. Calculo de tempo estimado: soma dos estimatedMinutes dos carros a frente / simultaneousSlots
-5. Endpoint publico retorna apenas: posicao, placa parcialmente mascarada (ABC-**34), status, tempo estimado
+5. Endpoint publico retorna apenas: posicao, placa parcialmente mascarada (ABC-\*\*34), status, tempo estimado
 6. Auto-refresh a cada 30 segundos via polling (simples e adequado para a escala)
 
 ---
@@ -249,6 +260,7 @@ Erro:    { success: false, error: { code, message, details? } }
 ## Plano de Implementacao (Subagentes)
 
 ### Fase 0: Bootstrap (sequencial, 1 agente)
+
 1. `npx create-next-app` com TypeScript, Tailwind, App Router
 2. Instalar todas as dependencias
 3. Configurar Prisma com schema completo
@@ -264,29 +276,35 @@ Erro:    { success: false, error: { code, message, details? } }
 ### Fase 1: 6 agentes em paralelo
 
 **Agente 1: Auth + Sistema de Usuarios**
+
 - NextAuth config, login page, middleware
 - CRUD funcionarios (API + paginas)
 - Zod schemas de usuario
+- Elysia
 
 **Agente 2: Inventario**
+
 - CRUD produtos (API + paginas)
 - Movimentacoes de estoque
 - Alertas de estoque baixo
 - Hooks React Query
 
 **Agente 3: Clientes + Veiculos + Ordens de Servico**
+
 - CRUD clientes e veiculos (API + paginas)
 - CRUD ordens de servico (API + paginas)
 - Transicoes de status
 - Upload de fotos do servico
 
 **Agente 4: Orcamentos + Contratos + PDF**
+
 - CRUD orcamentos (API + paginas + geracao PDF)
 - CRUD contratos (API + paginas)
 - Componente SignaturePad
 - Fluxo de assinatura publica
 
 **Agente 5: Fila + Relatorios + Dashboard**
+
 - API de fila + pagina de gerenciamento
 - Pagina publica de fila
 - APIs de relatorios + pagina com graficos
@@ -294,6 +312,7 @@ Erro:    { success: false, error: { code, message, details? } }
 - API e pagina de configuracoes
 
 **Agente 6: Upload + Seed + Deploy**
+
 - Storage abstraction layer
 - API de upload + componente FileUpload
 - Script de seed completo
@@ -302,6 +321,7 @@ Erro:    { success: false, error: { code, message, details? } }
 - DEPLOY.md com instrucoes passo a passo
 
 ### Fase 2: Integracao (sequencial, 1 agente)
+
 1. Conectar navegacao (sidebar, breadcrumbs)
 2. Testar fluxos end-to-end
 3. Corrigir problemas de integracao entre agentes
@@ -317,6 +337,7 @@ Erro:    { success: false, error: { code, message, details? } }
 Docker Compose com 3 servicos: app, postgres, minio.
 
 Passos:
+
 1. Clonar repositorio
 2. Copiar `.env.example` para `.env`, preencher secrets
 3. `docker compose up -d`
