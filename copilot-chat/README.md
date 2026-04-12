@@ -66,11 +66,11 @@ Acesse http://localhost:3000
 
 ## Credenciais Padrao
 
-| Email | Senha | Perfil |
-|---|---|---|
-| admin@aquaflow.com | admin123 | Gerente |
-| carlos@aquaflow.com | func123 | Funcionario |
-| maria@aquaflow.com | func123 | Funcionario |
+| Email               | Senha    | Perfil      |
+| ------------------- | -------- | ----------- |
+| admin@aquaflow.com  | admin123 | Gerente     |
+| carlos@aquaflow.com | func123  | Funcionario |
+| maria@aquaflow.com  | func123  | Funcionario |
 
 ## Scripts Disponiveis
 

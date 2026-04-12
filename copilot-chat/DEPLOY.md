@@ -23,6 +23,7 @@ docker compose up -d --build
 ```
 
 Isso vai iniciar:
+
 - **db**: PostgreSQL 17 (porta 5435)
 - **minio**: MinIO para armazenamento de arquivos (portas 9000/9001)
 - **app**: Aplicacao Next.js (porta 3000)
@@ -103,15 +104,15 @@ server {
 
 ## Variaveis de Ambiente
 
-| Variavel | Descricao | Exemplo |
-|---|---|---|
-| DATABASE_URL | URL de conexao PostgreSQL | postgresql://user:pass@host:5432/db |
-| NEXTAUTH_SECRET | Chave secreta para JWT | (gere com openssl rand -base64 32) |
-| NEXTAUTH_URL | URL publica da aplicacao | https://seudominio.com |
-| MINIO_ENDPOINT | Endereco do MinIO | localhost |
-| MINIO_PORT | Porta do MinIO | 9000 |
-| MINIO_ACCESS_KEY | Chave de acesso MinIO | minioadmin |
-| MINIO_SECRET_KEY | Chave secreta MinIO | minioadmin |
+| Variavel         | Descricao                 | Exemplo                             |
+| ---------------- | ------------------------- | ----------------------------------- |
+| DATABASE_URL     | URL de conexao PostgreSQL | postgresql://user:pass@host:5432/db |
+| NEXTAUTH_SECRET  | Chave secreta para JWT    | (gere com openssl rand -base64 32)  |
+| NEXTAUTH_URL     | URL publica da aplicacao  | https://seudominio.com              |
+| MINIO_ENDPOINT   | Endereco do MinIO         | localhost                           |
+| MINIO_PORT       | Porta do MinIO            | 9000                                |
+| MINIO_ACCESS_KEY | Chave de acesso MinIO     | minioadmin                          |
+| MINIO_SECRET_KEY | Chave secreta MinIO       | minioadmin                          |
 
 ## Checklist de Producao
 

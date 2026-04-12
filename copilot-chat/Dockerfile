@@ -1,10 +1,12 @@
-FROM node:20-alpine AS base
+FROM node:20-bookworm-slim AS base
+ENV NEXT_TELEMETRY_DISABLED=1
+ARG DATABASE_URL="postgresql://aquaflow:aquaflow@localhost:5435/aquaflow?schema=public"
+ENV DATABASE_URL=${DATABASE_URL}
 
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 FROM base AS builder
 WORKDIR /app
