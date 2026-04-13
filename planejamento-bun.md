@@ -298,7 +298,7 @@ Passos:
 
 - Substitui comandos `npx`/`npm` por `bunx`/`bun`
 - Define backend explicitamente com **Elysia API**
-- Troca ORM de Prisma para **Drizzle ORM** com foco em PostgreSQL
-- Padroniza ferramentas em **latest estavel** (Next.js, Elysia, Drizzle e ecossistema)
-- Introduz arquitetura de dominio por **Entidades + Casos de Uso**
+- Define o ORM oficial como **Drizzle ORM** com foco em PostgreSQL
+- Padroniza ferramentas em **latest** (Next.js, Elysia, Bun, Drizzle e ecossistema)
+- Introduz arquitetura de dominio com regra de negocio **apenas em Casos de Uso**
 - Ajusta bloco de deploy para fluxo Bun em Docker
