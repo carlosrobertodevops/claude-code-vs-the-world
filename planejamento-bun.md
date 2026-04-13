@@ -3,7 +3,8 @@
 ## Contexto
 
 Aplicacao micro-SaaS para gestao de lava-jatos. O objetivo e criar uma plataforma completa para operacoes diarias:
-controle de estoque, orcamentos, contratos, ordens de servico, fila publica e relatorios.
+controle de estoque, orcamentos, contratos, ordens de servico, fila publica e relatorios. No Estilo dark mode (com seletor para lighht mode) com fundo #labada.
+Tipografia Inter do Google Fonts. Totalmente responsivo.
 
 Este documento e uma versao ajustada para:
 
@@ -53,23 +54,24 @@ Regra geral de versao neste projeto:
 - Evitar fixar versoes antigas sem necessidade
 - Revisar periodicamente mudancas breaking antes de atualizar em producao
 
-| Camada        | Tecnologia                               | Justificativa                                           |
-| ------------- | ---------------------------------------- | ------------------------------------------------------- |
-| Runtime       | Bun (latest)                             | Performance, DX, package manager unico                  |
-| Framework     | Next.js (latest estavel, App Router)     | Full-stack, SSR, rotas e UI em um projeto               |
-| API           | Elysia (latest)                          | API tipada, simples e performatica                      |
-| Linguagem     | TypeScript (latest estavel)              | Type safety ponta a ponta                               |
-| Banco         | PostgreSQL (latest estavel suportado)    | Banco principal e oficial do projeto                    |
-| ORM           | Drizzle ORM + Drizzle Kit (latest)       | Tipagem forte, SQL-first e excelente integracao com Bun |
-| Auth          | NextAuth/Auth.js (latest estavel)        | Integracao com Next.js                                  |
-| Validacao     | Zod (latest)                             | Contratos de entrada/saida                              |
-| UI            | Tailwind CSS + shadcn/ui (latest)        | Produtividade e acessibilidade                          |
-| Data Fetching | TanStack React Query (latest)            | Cache e sincronizacao de estado servidor                |
-| Forms         | React Hook Form + Zod (latest)           | Formularios performaticos                               |
-| Upload        | Local (dev) / MinIO S3-compatible (prod) | Simples no dev, portavel em producao                    |
-| PDF           | @react-pdf/renderer (latest)             | Orcamentos e contratos                                  |
-| Graficos      | Recharts (latest)                        | Relatorios                                              |
-| Container     | Docker + Docker Compose                  | Deploy simplificado                                     |
+| Camada          | Tecnologia                               | Justificativa                                               |
+| --------------- | ---------------------------------------- | ----------------------------------------------------------- |
+| Runtime         | Bun (latest)                             | Performance, DX, package manager unico                      |
+| Framework       | Next.js (latest estavel, App Router)     | Full-stack, SSR, rotas e UI em um projeto                   |
+| API             | Elysia (latest)                          | API tipada, simples e performatica                          |
+| Linguagem       | TypeScript (latest estavel)              | Type safety ponta a ponta                                   |
+| Banco           | PostgreSQL (latest estavel suportado)    | Banco principal e oficial do projeto                        |
+| ORM             | Drizzle ORM + Drizzle Kit (latest)       | Tipagem forte, SQL-first e excelente integracao com Bun     |
+| Auth            | NextAuth/Auth.js (latest estavel)        | Integracao com Next.js                                      |
+| Validacao       | Zod (latest)                             | Contratos de entrada/saida                                  |
+| UI              | Tailwind CSS + shadcn/ui (latest)        | Produtividade e acessibilidade                              |
+| Fonte/Tipologia | Inter                                    | Usar Inter para tudo em Negrito e normal dependendo da tela |
+| Data Fetching   | TanStack React Query (latest)            | Cache e sincronizacao de estado servidor                    |
+| Forms           | React Hook Form + Zod (latest)           | Formularios performaticos                                   |
+| Upload          | Local (dev) / MinIO S3-compatible (prod) | Simples no dev, portavel em producao                        |
+| PDF             | @react-pdf/renderer (latest)             | Orcamentos e contratos                                      |
+| Graficos        | Recharts (latest)                        | Relatorios                                                  |
+| Container       | Docker + Docker Compose                  | Deploy simplificado                                         |
 
 **Decisoes chave**:
 
@@ -81,12 +83,11 @@ Regra geral de versao neste projeto:
 
 ---
 
-## Arquitetura de Regras de Negocio (Entidades + Casos de Uso)
+## Arquitetura de Regras de Negocio (Somente Casos de Uso)
 
 Separacao principal:
 
-- **Entidades (domain/entities):** regras invariantes do negocio
-- **Casos de Uso (domain/use-cases):** orquestracao de fluxos
+- **Casos de Uso (domain/use-cases):** regras de negocio e orquestracao de fluxos
 - **Repositorios (domain/repositories):** contratos de persistencia
 - **Infra (infrastructure):** Drizzle, storage, providers
 - **API (server/api):** Elysia valida, chama use case e retorna payload padrao
@@ -113,16 +114,14 @@ projeto/
 │   │   │       ├── employees.routes.ts
 │   │   │       └── reports.routes.ts
 │   │   ├── domain/
-│   │   │   ├── entities/
-│   │   │   │   ├── service-order.entity.ts
-│   │   │   │   ├── quote.entity.ts
-│   │   │   │   └── queue-entry.entity.ts
 │   │   │   ├── repositories/
 │   │   │   │   ├── service-order.repository.ts
 │   │   │   │   └── queue.repository.ts
 │   │   │   └── use-cases/
 │   │   │       ├── create-service-order.use-case.ts
+│   │   │       ├── validate-service-order.use-case.ts
 │   │   │       ├── move-queue.use-case.ts
+│   │   │       ├── create-quote.use-case.ts
 │   │   │       ├── generate-quote-pdf.use-case.ts
 │   │   │       └── sign-contract.use-case.ts
 │   │   └── infrastructure/
@@ -240,7 +239,7 @@ Manter volume do plano original com adaptacao de dominio:
    - `bun add -d drizzle-kit@latest tsx@latest @types/bcryptjs@latest`
 3. Configurar schema Drizzle (PostgreSQL) e migration inicial
 4. Subir `docker-compose` (postgres + minio)
-5. Criar base de arquitetura: entidades, use-cases, repositorios
+5. Criar base de arquitetura: use-cases, repositorios e adapters de infraestrutura
 6. Inicializar shadcn/ui
 7. Layout base (auth + dashboard)
 
