@@ -12,6 +12,28 @@ async function main() {
   const passwordHash = await hash("password123", 12);
 
   await prisma.$transaction(async (tx) => {
+    console.log("Clearing existing data...");
+    await tx.$executeRawUnsafe(`
+      TRUNCATE TABLE
+        "service_photos",
+        "queue_entries",
+        "service_order_items",
+        "service_orders",
+        "contracts",
+        "quote_items",
+        "quotes",
+        "file_uploads",
+        "vehicle_photos",
+        "vehicles",
+        "car_wash_config",
+        "customers",
+        "stock_movements",
+        "products",
+        "service_types",
+        "users"
+      RESTART IDENTITY CASCADE
+    `);
+
     // =========================================================================
     // 1. Users (1 Manager + 2 Employees)
     // =========================================================================

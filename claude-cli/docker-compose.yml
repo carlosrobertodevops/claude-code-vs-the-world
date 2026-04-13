@@ -1,13 +1,13 @@
 services:
-  postgres:
+  db:
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: aquawash
-      POSTGRES_PASSWORD: aquawash123
-      POSTGRES_DB: aquawash
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5434:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -16,8 +16,8 @@ services:
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -29,20 +29,22 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: "postgresql://aquawash:aquawash123@postgres:5432/aquawash?schema=public"
+      DATABASE_URL: "${DATABASE_URL_DOCKER}"
       AUTH_SECRET: "${AUTH_SECRET}"
       AUTH_URL: "${AUTH_URL:-http://localhost:3000}"
-      STORAGE_PROVIDER: "minio"
-      MINIO_ENDPOINT: "minio"
-      MINIO_PORT: "9000"
-      MINIO_ACCESS_KEY: "minioadmin"
-      MINIO_SECRET_KEY: "minioadmin"
-      MINIO_BUCKET: "aquawash"
+      STORAGE_MODE: "${STORAGE_MODE:-local}"
+      MINIO_ENDPOINT: "${MINIO_ENDPOINT_DOCKER:-minio}"
+      MINIO_PORT: "${MINIO_PORT}"
+      MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY}"
+      MINIO_SECRET_KEY: "${MINIO_SECRET_KEY}"
+      MINIO_BUCKET: "${MINIO_BUCKET}"
     depends_on:
-      - postgres
+      - db
       - minio
 
 volumes:
