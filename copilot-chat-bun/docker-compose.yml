@@ -1,0 +1,45 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - minio
+    command: bun run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lavaflow
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  postgres_data:
+  minio_data:

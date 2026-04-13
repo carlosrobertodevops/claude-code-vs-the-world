@@ -3,7 +3,8 @@
 ## Contexto
 
 Aplicacao micro-SaaS para gestao de lava-jatos. O objetivo e criar uma plataforma completa para operacoes diarias:
-controle de estoque, orcamentos, contratos, ordens de servico, fila publica e relatorios.
+controle de estoque, orcamentos, contratos, ordens de servico, fila publica e relatorios. No Estilo dark mode (com seletor para lighht mode) com fundo #labada.
+Tipografia Inter do Google Fonts. Totalmente responsivo.
 
 Este documento e uma versao ajustada para:
 
