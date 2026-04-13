@@ -80,15 +80,17 @@ export function generateOrderNumber(prefix: string, count: number): string {
   return `${prefix}-${String(count).padStart(4, "0")}`;
 }
 
+export type ApiMeta = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
 export type ApiResponse<T> = {
   success: true;
   data: T;
-  meta?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  meta?: ApiMeta;
 } | {
   success: false;
   error: {
@@ -98,7 +100,7 @@ export type ApiResponse<T> = {
   };
 };
 
-export function successResponse<T>(data: T, meta?: ApiResponse<T> extends { success: true } ? ApiResponse<T>["meta"] : never) {
+export function successResponse<T>(data: T, meta?: ApiMeta) {
   return Response.json({ success: true, data, meta });
 }
 

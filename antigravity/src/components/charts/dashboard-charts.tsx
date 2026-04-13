@@ -29,10 +29,10 @@ export function DashboardCharts({ dailyRevenue }: DashboardChartsProps) {
                   borderRadius: "8px",
                   fontSize: "12px",
                 }}
-                formatter={(value: number) => [
-                  `R$ ${value.toFixed(2)}`,
-                  "Faturamento",
-                ]}
+                formatter={(value) => {
+                  const amount = typeof value === "number" ? value : Number(value ?? 0);
+                  return [`R$ ${Number.isFinite(amount) ? amount.toFixed(2) : "0.00"}`, "Faturamento"];
+                }}
               />
               <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
             </BarChart>

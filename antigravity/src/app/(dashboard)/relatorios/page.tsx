@@ -71,7 +71,7 @@ export default function RelatoriosPage() {
         </div>
         <div className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl p-5">
           <h3 className="font-semibold mb-4">Serviços por Tipo</h3>
-          <div className="h-64"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={servicesByType} dataKey="revenue" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({name, percent}) => `${name} ${(percent*100).toFixed(0)}%`}>{servicesByType.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer></div>
+          <div className="h-64"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={servicesByType} dataKey="revenue" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({name, percent}) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}>{servicesByType.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}</Pie><Tooltip /></PieChart></ResponsiveContainer></div>
         </div>
       </div>
 

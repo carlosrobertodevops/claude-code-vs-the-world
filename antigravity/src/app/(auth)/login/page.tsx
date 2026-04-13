@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Droplets, Eye, EyeOff, Loader2 } from "lucide-react";
 import { APP_NAME, APP_DESCRIPTION } from "@/lib/constants";
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
@@ -129,5 +129,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="w-full max-w-md px-4" />}>
+      <LoginPageContent />
+    </Suspense>
   );
 }

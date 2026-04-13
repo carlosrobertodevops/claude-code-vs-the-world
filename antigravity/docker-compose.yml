@@ -1,20 +1,70 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:17-alpine
-    container_name: aquawash-db
-    restart: unless-stopped
+  db-init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    container_name: aquawash-db-init
+    restart: "no"
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: aquawash
-      POSTGRES_PASSWORD: aquawash123
-      POSTGRES_DB: aquawash
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
+      SEED_ON_STARTUP: ${SEED_ON_STARTUP:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >-
+      sh -c "
+      npx prisma migrate deploy &&
+      if [ \"$$SEED_ON_STARTUP\" = \"true\" ]; then
+        npx prisma db seed;
+      else
+        echo 'Skipping seed (SEED_ON_STARTUP=false)';
+      fi
+      "
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aquawash-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
     ports:
-      - "5436:5432"
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    volumes:
+      - app_uploads:/app/public/uploads
+
+  db:
+    image: postgres:17-alpine
+    container_name: db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-aquaflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aquaflow}
+      POSTGRES_DB: ${POSTGRES_DB:-aquaflow}
+    ports:
+      - "${POSTGRES_PORT:-5436}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U aquawash"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aquaflow}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,8 +74,8 @@ services:
     container_name: aquawash-minio
     restart: unless-stopped
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-minioadmin}
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -39,5 +89,6 @@ services:
       retries: 3
 
 volumes:
+  app_uploads:
   postgres_data:
   minio_data:

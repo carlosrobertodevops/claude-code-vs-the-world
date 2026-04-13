@@ -7,12 +7,13 @@ import { formatDate } from "@/lib/utils";
 import { Plus, Loader2 } from "lucide-react";
 
 interface Employee { id: string; name: string; email: string; role: string; phone: string; isActive: boolean; createdAt: string; _count: { serviceOrders: number }; }
+type UserRole = "MANAGER" | "EMPLOYEE";
 
 export default function FuncionariosPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", password: "", role: "EMPLOYEE" as const, phone: "" });
+  const [formData, setFormData] = useState<{ name: string; email: string; password: string; role: UserRole; phone: string }>({ name: "", email: "", password: "", role: "EMPLOYEE", phone: "" });
   const [saving, setSaving] = useState(false);
 
   const fetchEmployees = async () => { try { const res = await fetch("/api/funcionarios"); const json = await res.json(); if (json.success) setEmployees(json.data); } finally { setLoading(false); } };
@@ -52,7 +53,7 @@ export default function FuncionariosPage() {
               <div><label className="block text-sm font-medium mb-1">Nome *</label><input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--input))] bg-[hsl(var(--background))] text-sm" /></div>
               <div><label className="block text-sm font-medium mb-1">Email *</label><input type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--input))] bg-[hsl(var(--background))] text-sm" /></div>
               <div><label className="block text-sm font-medium mb-1">Senha *</label><input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} required minLength={6} className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--input))] bg-[hsl(var(--background))] text-sm" /></div>
-              <div><label className="block text-sm font-medium mb-1">Cargo</label><select value={formData.role} onChange={e => setFormData({...formData, role: e.target.value as "MANAGER"|"EMPLOYEE"})} className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--input))] bg-[hsl(var(--background))] text-sm"><option value="EMPLOYEE">Funcionário</option><option value="MANAGER">Gerente</option></select></div>
+              <div><label className="block text-sm font-medium mb-1">Cargo</label><select value={formData.role} onChange={e => setFormData({...formData, role: e.target.value as UserRole})} className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--input))] bg-[hsl(var(--background))] text-sm"><option value="EMPLOYEE">Funcionário</option><option value="MANAGER">Gerente</option></select></div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowForm(false)} className="flex-1 px-4 py-2 rounded-lg border border-[hsl(var(--border))] text-sm">Cancelar</button>
                 <button type="submit" disabled={saving} className="flex-1 px-4 py-2 rounded-lg bg-[hsl(var(--primary))] text-white text-sm font-medium disabled:opacity-50">{saving ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Salvar"}</button>
