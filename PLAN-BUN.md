@@ -41,8 +41,9 @@ Uso do nome:
 Escolhas sugeridas:
 
 1. **Dark mode** com `next-themes` + shadcn/ui
-2. **Exportacao de relatorios para CSV**
-3. **QR Code da fila publica** para acesso rapido no balcao
+2. **Backgroyd com linhas finas vertiais e horizontais e blur**
+3. **Exportacao de relatorios para CSV**
+4. **QR Code da fila publica** para acesso rapido no balcao
 
 Justificar no README:
 

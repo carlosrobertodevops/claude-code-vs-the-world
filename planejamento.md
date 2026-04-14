@@ -53,6 +53,8 @@ O implementador deve justificar brevemente a escolha no README.
 | Auth          | NextAuth v5 (Auth.js)                        | Integrado ao Next.js, JWT, roles                          |
 | Validacao     | Zod 4                                        | Schemas compartilhados frontend/backend                   |
 | UI            | Tailwind CSS 4 + shadcn/ui                   | Desenvolvimento rapido, componentes acessiveis            |
+| Fontes            | Fontes e Tgipologia Google do Tipo Tailwind CSS 4 + shadcn/ui                   | Desenvolvimento rapido, componentes acessiveis            |
+
 | Data Fetching | TanStack React Query 5                       | Cache, optimistic updates                                 |
 | Forms         | React Hook Form + Zod                        | Forms performaticos com validacao                         |
 | Upload        | Local (dev) / S3-compatible via MinIO (prod) | Abstraction layer                                         |
