@@ -1,0 +1,25 @@
+# drizzle migrations
+drizzle/
+
+# env files
+.env
+.env*.local
+
+# misc
+# debug logs
+npm-debug.1og*
+yarn-debug.1og*
+
+# misc
+.DS_Store
+*.pem
+coverage/
+# vercel
+.vercel/
+
+# gstack
+.gstack/
+# lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

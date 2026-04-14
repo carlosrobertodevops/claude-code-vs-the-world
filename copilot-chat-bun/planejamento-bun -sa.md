@@ -1,5 +1,4 @@
 # Micro-SaaS para Lava-Jatos — Plano Multi-Agente
-
 ## Bun + Next.js + Elysia + Drizzle ORM + PostgreSQL + Docker
 
 > **Modo de execução:** `context-mode` ativado.
@@ -14,30 +13,29 @@
 **LavaFlow** — plataforma completa para operações diárias de lava-jatos:
 controle de estoque, orçamentos, contratos, ordens de serviço, fila pública e relatórios.
 
-| Uso do nome       | Valor                |
-| ----------------- | -------------------- |
-| `package.json`    | `lavaflow`           |
-| Título da app     | LavaFlow             |
-| Admin seed        | `admin@lavaflow.com` |
-| Slug fila pública | `lavaflow-centro`    |
+| Uso do nome       | Valor                          |
+|-------------------|-------------------------------|
+| `package.json`    | `lavaflow`                    |
+| Título da app     | LavaFlow                      |
+| Admin seed        | `admin@lavaflow.com`          |
+| Slug fila pública | `lavaflow-centro`             |
 
 ---
 
 ## Features Extras
 
-| #   | Feature                                                                   | Justificativa                                  |
-| --- | ------------------------------------------------------------------------- | ---------------------------------------------- |
-| 1   | **Dark mode** (`next-themes` + shadcn/ui)                                 | Usabilidade em turnos noturnos                 |
-| 2   | **Exportação CSV** nos relatórios                                         | Repasse direto para contabilidade/operação     |
-| 3   | **QR Code da fila pública**                                               | Reduz atrito para clientes acompanharem status |
-| 4   | **backgoud com linhas horizontais e verticais finas e com blur ao funto** | com base em ,/public/background.png            |
+| # | Feature | Justificativa |
+|---|---------|---------------|
+| 1 | **Dark mode** (`next-themes` + shadcn/ui) | Usabilidade em turnos noturnos |
+| 2 | **Exportação CSV** nos relatórios | Repasse direto para contabilidade/operação |
+| 3 | **QR Code da fila pública** | Reduz atrito para clientes acompanharem status |
 
 ---
 
 ## Tech Stack (sempre latest estável)
 
 | Camada        | Tecnologia                               |
-| ------------- | ---------------------------------------- |
+|---------------|------------------------------------------|
 | Runtime       | Bun (latest)                             |
 | Framework     | Next.js — latest estável, App Router     |
 | API           | Elysia (latest)                          |
@@ -179,7 +177,6 @@ docker compose up -d postgres minio
 ```
 
 **Arquivos criados:**
-
 - `package.json`
 - `tsconfig.json` — `strict: true`, alias `@/` → `src/`
 - `drizzle.config.ts`
@@ -203,7 +200,6 @@ docker compose up -d postgres minio
 **Responsabilidade:** schema Drizzle completo + migration inicial.
 
 **Pastas exclusivas:**
-
 ```
 drizzle/schema/
 src/server/infrastructure/drizzle/
@@ -211,21 +207,20 @@ src/server/infrastructure/drizzle/
 
 **Schemas a criar** (um arquivo por grupo):
 
-| Arquivo                    | Tabelas                                                   |
-| -------------------------- | --------------------------------------------------------- |
-| `users.schema.ts`          | `users` — id CUID, name, email, password_hash, role enum  |
-| `customers.schema.ts`      | `customers`, `vehicles`, `vehicle_photos`                 |
-| `inventory.schema.ts`      | `products`, `stock_movements`, `service_types`            |
-| `quotes.schema.ts`         | `quotes`, `quote_items`                                   |
-| `contracts.schema.ts`      | `contracts`                                               |
+| Arquivo | Tabelas |
+|---------|---------|
+| `users.schema.ts` | `users` — id CUID, name, email, password_hash, role enum |
+| `customers.schema.ts` | `customers`, `vehicles`, `vehicle_photos` |
+| `inventory.schema.ts` | `products`, `stock_movements`, `service_types` |
+| `quotes.schema.ts` | `quotes`, `quote_items` |
+| `contracts.schema.ts` | `contracts` |
 | `service-orders.schema.ts` | `service_orders`, `service_order_items`, `service_photos` |
-| `queue.schema.ts`          | `queue_entries`                                           |
-| `config.schema.ts`         | `car_wash_config`                                         |
-| `uploads.schema.ts`        | `file_uploads`                                            |
-| `index.ts`                 | re-exporta tudo                                           |
+| `queue.schema.ts` | `queue_entries` |
+| `config.schema.ts` | `car_wash_config` |
+| `uploads.schema.ts` | `file_uploads` |
+| `index.ts` | re-exporta tudo |
 
 **Regras:**
-
 - PKs: CUID (`@paralleldrive/cuid2`)
 - `created_at` + `updated_at` em todas as tabelas
 - `deleted_at` (nullable) em: `users`, `customers`, `vehicles`, `products`, `service_orders`, `contracts`
@@ -245,7 +240,6 @@ bun run db:migrate
 **Responsabilidade:** tipos de domínio e contratos de repositório. Zero Drizzle.
 
 **Pastas exclusivas:**
-
 ```
 src/lib/types/
 src/server/domain/repositories/
@@ -253,7 +247,6 @@ src/server/domain/use-cases/     ← apenas stubs
 ```
 
 **Tipos de domínio** (`src/lib/types/`):
-
 ```
 user.types.ts · customer.types.ts · vehicle.types.ts
 product.types.ts · stock.types.ts · service-type.types.ts
@@ -263,7 +256,6 @@ common.types.ts   ← PaginatedResult<T>, ApiResponse<T>, Role, OrderStatus…
 ```
 
 **Contratos de repositório** (`src/server/domain/repositories/`):
-
 ```
 IUserRepository.ts · ICustomerRepository.ts · IVehicleRepository.ts
 IProductRepository.ts · IServiceOrderRepository.ts · IQueueRepository.ts
@@ -271,7 +263,6 @@ IQuoteRepository.ts · IContractRepository.ts · IUploadRepository.ts
 ```
 
 **Stubs de use cases** — arquivo com assinatura + `throw new Error('not implemented')`:
-
 ```
 login · get-current-user · create-employee · list-employees
 create-product · update-stock · list-products
@@ -294,7 +285,6 @@ get-revenue-report · export-report-csv
 **Responsabilidade:** storage, auth helpers, error classes, utilitários.
 
 **Pastas exclusivas:**
-
 ```
 src/lib/errors/
 src/lib/utils/
@@ -303,7 +293,6 @@ src/server/infrastructure/auth/
 ```
 
 **Error classes** (`src/lib/errors/`):
-
 ```
 AppError.ts          ← base: code, message, statusCode
 NotFoundError.ts
@@ -314,7 +303,6 @@ ConflictError.ts
 ```
 
 **Utils** (`src/lib/utils/`):
-
 ```
 response.ts    ← helpers success(data, meta?) e error(code, message, details?)
 pagination.ts  ← paginate(page, limit)
@@ -323,7 +311,6 @@ date.ts        ← formatadores pt-BR
 ```
 
 **StorageProvider** (`src/server/infrastructure/storage/`):
-
 ```
 IStorageProvider.ts        ← interface: upload(file, path), delete(path)
 LocalStorageProvider.ts    ← salva em public/uploads/ (dev)
@@ -332,7 +319,6 @@ storage.factory.ts         ← retorna provider conforme STORAGE_PROVIDER env
 ```
 
 **Auth helpers** (`src/server/infrastructure/auth/`):
-
 ```
 password.ts    ← hash(plain) e verify(plain, hash) — bcryptjs 12 rounds
 jwt.ts         ← sign/verify alinhados com Auth.js v5
@@ -355,7 +341,6 @@ jwt.ts         ← sign/verify alinhados com Auth.js v5
 **Módulo:** Autenticação + Gestão de Funcionários
 
 **Pastas exclusivas:**
-
 ```
 src/server/infrastructure/repositories/user.repository.ts
 src/server/domain/use-cases/  ← auth e employees
@@ -370,7 +355,6 @@ src/app/api/auth/[...nextauth]/route.ts
 ```
 
 **Implementações:**
-
 - `UserRepository` (Drizzle)
 - Use cases: `login`, `get-current-user`, `create-employee`, `update-employee`, `deactivate-employee`, `list-employees`
 - Auth.js v5 com `CredentialsProvider` + JWT stateless
@@ -388,7 +372,6 @@ src/app/api/auth/[...nextauth]/route.ts
 **Módulo:** Inventário — Produtos e Tipos de Serviço
 
 **Pastas exclusivas:**
-
 ```
 src/server/infrastructure/repositories/product.repository.ts
 src/server/domain/use-cases/  ← inventory
@@ -397,7 +380,6 @@ src/app/(dashboard)/inventario/
 ```
 
 **Implementações:**
-
 - `ProductRepository` (Drizzle) com soft delete
 - Use cases: `create-product`, `update-product`, `delete-product`, `list-products`, `update-stock`, `list-service-types`, `create-service-type`
 - Rotas CRUD em `/api/inventario` + movimentações de estoque + tipos de serviço
@@ -412,7 +394,6 @@ src/app/(dashboard)/inventario/
 **Módulo:** Clientes e Veículos
 
 **Pastas exclusivas:**
-
 ```
 src/server/infrastructure/repositories/customer.repository.ts
 src/server/infrastructure/repositories/vehicle.repository.ts
@@ -422,7 +403,6 @@ src/app/(dashboard)/clientes/
 ```
 
 **Implementações:**
-
 - `CustomerRepository` + `VehicleRepository` (Drizzle)
 - Use cases: `create-customer`, `update-customer`, `list-customers`, `get-customer`, `add-vehicle`, `list-vehicles-by-customer`, `upload-vehicle-photo`
 - Rotas CRUD em `/api/clientes` + veículos aninhados
@@ -437,7 +417,6 @@ src/app/(dashboard)/clientes/
 **Módulo:** Ordens de Serviço + Fila Pública
 
 **Pastas exclusivas:**
-
 ```
 src/server/infrastructure/repositories/service-order.repository.ts
 src/server/infrastructure/repositories/queue.repository.ts
@@ -450,7 +429,6 @@ src/app/fila/[slug]/
 ```
 
 **Implementações:**
-
 - `ServiceOrderRepository` + `QueueRepository` (Drizzle)
 - Use cases: `create-service-order`, `update-service-order-status`, `list-service-orders`, `add-to-queue`, `move-queue`, `remove-from-queue`, `get-public-queue`
 - `GET /api/fila/publica/:slug` — rota pública, sem auth
@@ -466,7 +444,6 @@ src/app/fila/[slug]/
 **Módulo:** Orçamentos, Contratos e PDFs
 
 **Pastas exclusivas:**
-
 ```
 src/server/infrastructure/repositories/quote.repository.ts
 src/server/infrastructure/repositories/contract.repository.ts
@@ -479,7 +456,6 @@ src/lib/pdf/
 ```
 
 **Implementações:**
-
 - `QuoteRepository` + `ContractRepository` (Drizzle)
 - Use cases: `create-quote`, `update-quote`, `list-quotes`, `generate-quote-pdf`, `create-contract`, `list-contracts`, `sign-contract`
 - `POST /api/contratos/:id/assinar` — rota pública, valida token de assinatura
@@ -494,7 +470,6 @@ src/lib/pdf/
 **Módulo:** Relatórios, Dashboard Home e Configurações
 
 **Pastas exclusivas:**
-
 ```
 src/server/domain/use-cases/  ← reports
 src/server/api/routes/reports.routes.ts
@@ -505,7 +480,6 @@ src/components/charts/
 ```
 
 **Implementações:**
-
 - Use cases: `get-revenue-report`, `get-services-summary`, `get-stock-report`, `export-report-csv`
 - Rotas `/api/relatorios/*` — MANAGER only
 - `/dashboard` (home): cards de KPIs + Recharts LineChart de receita do mês
@@ -525,7 +499,6 @@ src/components/charts/
 **Responsabilidade:** layout global, navegação, consistência visual, responsividade.
 
 **Pastas exclusivas:**
-
 ```
 src/app/(dashboard)/layout.tsx
 src/app/(auth)/layout.tsx
@@ -535,7 +508,6 @@ src/components/ui/  ← apenas componentes genéricos ausentes
 ```
 
 **Tarefas:**
-
 - Sidebar com navegação completa, header com user menu e seletor dark/light
 - Sidebar responsiva (drawer mobile, fixa desktop)
 - Componente `EmptyState` genérico
@@ -552,14 +524,12 @@ src/components/ui/  ← apenas componentes genéricos ausentes
 **Responsabilidade:** seed completo e scripts de verificação.
 
 **Pastas exclusivas:**
-
 ```
 scripts/seed.ts
 scripts/verify.ts
 ```
 
 **Seed (`scripts/seed.ts`):**
-
 - 3 usuários: `admin@lavaflow.com` (MANAGER), `joao@lavaflow.com`, `maria@lavaflow.com` (EMPLOYEE) — senhas com bcryptjs 12 rounds
 - 10 clientes com 1–3 veículos cada
 - 20 produtos com variação de estoque
@@ -571,7 +541,6 @@ scripts/verify.ts
 - `CarWashConfig` para o slug padrão
 
 **Verify (`scripts/verify.ts`):**
-
 - Login retorna JWT válido
 - CRUD de produto sem erro
 - Criação de OS vincula cliente e veículo
@@ -590,7 +559,6 @@ scripts/verify.ts
 **Responsabilidade:** Dockerfile, docker-compose de produção, README.
 
 **Pastas exclusivas:**
-
 ```
 Dockerfile
 docker-compose.yml
@@ -600,7 +568,6 @@ README.md
 ```
 
 **Dockerfile** (multi-stage):
-
 ```
 stage deps     → bun install --frozen-lockfile
 stage builder  → bun run build
@@ -619,12 +586,12 @@ stage runner   → imagem mínima, .next/standalone, porta 3000
 
 Cada subagente reporta ao orquestrador:
 
-| Status    | Formato                                                 |
-| --------- | ------------------------------------------------------- |
+| Status | Formato |
+|--------|---------|
 | Iniciando | `[AGENT: nome] STARTED — arquivos que vai criar/editar` |
-| Concluído | `[AGENT: nome] DONE — arquivos criados/editados`        |
-| Bloqueado | `[AGENT: nome] BLOCKED — motivo — aguardando: agente`   |
-| Erro      | `[AGENT: nome] ERROR — descrição`                       |
+| Concluído | `[AGENT: nome] DONE — arquivos criados/editados` |
+| Bloqueado | `[AGENT: nome] BLOCKED — motivo — aguardando: agente` |
+| Erro | `[AGENT: nome] ERROR — descrição` |
 
 O orquestrador **não avança** para a próxima wave com qualquer agente em status diferente de `DONE`.
 
@@ -651,7 +618,6 @@ bun run verify && docker compose -f docker-compose.prod.yml config
 ## Rotas da API — Mapa Completo
 
 ### Públicas (sem auth)
-
 ```
 POST  /api/auth/login
 GET   /api/fila/publica/:slug
@@ -660,7 +626,6 @@ GET   /fila/[slug]              ← página Next.js
 ```
 
 ### Autenticadas — EMPLOYEE + MANAGER
-
 ```
 /api/inventario
 /api/orcamentos
@@ -671,7 +636,6 @@ GET   /fila/[slug]              ← página Next.js
 ```
 
 ### Autenticadas — MANAGER only
-
 ```
 /api/funcionarios
 /api/contratos
