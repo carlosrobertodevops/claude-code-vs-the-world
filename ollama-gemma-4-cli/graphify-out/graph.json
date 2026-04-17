@@ -1,0 +1,444 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "plan_bun_elysia_project_definition",
+        "label": "Project Specification",
+        "nodes": [
+          "plan_bun_elysia_tech_stack",
+          "plan_bun_elysia_db_schema",
+          "plan_bun_elysia_api_design",
+          "plan_bun_elysia_implementation_plan"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "plan-bun-elysia.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "postcss.config.mjs",
+      "source_location": "L1",
+      "id": "postcss_config_mjs",
+      "community": 5,
+      "norm_label": "postcss.config.mjs"
+    },
+    {
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "next-env.d.ts",
+      "source_location": "L1",
+      "id": "next_env_d_ts",
+      "community": 6,
+      "norm_label": "next-env.d.ts"
+    },
+    {
+      "label": "drizzle.config.ts",
+      "file_type": "code",
+      "source_file": "drizzle.config.ts",
+      "source_location": "L1",
+      "id": "drizzle_config_ts",
+      "community": 7,
+      "norm_label": "drizzle.config.ts"
+    },
+    {
+      "label": "eslint.config.mjs",
+      "file_type": "code",
+      "source_file": "eslint.config.mjs",
+      "source_location": "L1",
+      "id": "eslint_config_mjs",
+      "community": 8,
+      "norm_label": "eslint.config.mjs"
+    },
+    {
+      "label": "next.config.ts",
+      "file_type": "code",
+      "source_file": "next.config.ts",
+      "source_location": "L1",
+      "id": "next_config_ts",
+      "community": 9,
+      "norm_label": "next.config.ts"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_layout_tsx",
+      "community": 2,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L12",
+      "id": "layout_rootlayout",
+      "community": 2,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_page_tsx",
+      "community": 10,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "table.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_table_tsx",
+      "community": 1,
+      "norm_label": "table.tsx"
+    },
+    {
+      "label": "Table()",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L7",
+      "id": "table_table",
+      "community": 1,
+      "norm_label": "table()"
+    },
+    {
+      "label": "TableHeader()",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L22",
+      "id": "table_tableheader",
+      "community": 1,
+      "norm_label": "tableheader()"
+    },
+    {
+      "label": "TableBody()",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L32",
+      "id": "table_tablebody",
+      "community": 1,
+      "norm_label": "tablebody()"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L46",
+      "id": "table_cn",
+      "community": 1,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "button.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_button_tsx",
+      "community": 3,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L52",
+      "id": "button_cn",
+      "community": 3,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "data-table.tsx",
+      "file_type": "code",
+      "source_file": "src/components/tables/data-table.tsx",
+      "source_location": "L1",
+      "id": "src_components_tables_data_table_tsx",
+      "community": 11,
+      "norm_label": "data-table.tsx"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "src/lib/utils.ts",
+      "source_location": "L1",
+      "id": "src_lib_utils_ts",
+      "community": 4,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "src/lib/utils.ts",
+      "source_location": "L4",
+      "id": "utils_cn",
+      "community": 4,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "db.ts",
+      "file_type": "code",
+      "source_file": "src/lib/db.ts",
+      "source_location": "L1",
+      "id": "src_lib_db_ts",
+      "community": 12,
+      "norm_label": "db.ts"
+    },
+    {
+      "label": "schema.ts",
+      "file_type": "code",
+      "source_file": "drizzle/schema.ts",
+      "source_location": "L1",
+      "id": "drizzle_schema_ts",
+      "community": 13,
+      "norm_label": "schema.ts"
+    },
+    {
+      "label": "Next.js Project",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_nextjs_project",
+      "community": 0,
+      "norm_label": "next.js project"
+    },
+    {
+      "label": "Micro-SaaS para Lava-Jatos",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_microsaas_lava_jatos",
+      "community": 0,
+      "norm_label": "micro-saas para lava-jatos"
+    },
+    {
+      "label": "Tech Stack",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_tech_stack",
+      "community": 0,
+      "norm_label": "tech stack"
+    },
+    {
+      "label": "Database Schema",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_db_schema",
+      "community": 0,
+      "norm_label": "database schema"
+    },
+    {
+      "label": "API Design",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_api_design",
+      "community": 0,
+      "norm_label": "api design"
+    },
+    {
+      "label": "Implementation Plan",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_implementation_plan",
+      "community": 0,
+      "norm_label": "implementation plan"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "src_app_layout_tsx",
+      "_tgt": "layout_rootlayout",
+      "source": "src_app_layout_tsx",
+      "target": "layout_rootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "src_components_ui_table_tsx",
+      "_tgt": "table_table",
+      "source": "src_components_ui_table_tsx",
+      "target": "table_table",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "src_components_ui_table_tsx",
+      "_tgt": "table_tableheader",
+      "source": "src_components_ui_table_tsx",
+      "target": "table_tableheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "src_components_ui_table_tsx",
+      "_tgt": "table_tablebody",
+      "source": "src_components_ui_table_tsx",
+      "target": "table_tablebody",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/table.tsx",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_src": "src_components_ui_table_tsx",
+      "_tgt": "table_cn",
+      "source": "src_components_ui_table_tsx",
+      "target": "table_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/button.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "src_components_ui_button_tsx",
+      "_tgt": "button_cn",
+      "source": "src_components_ui_button_tsx",
+      "target": "button_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_lib_utils_ts",
+      "_tgt": "utils_cn",
+      "source": "src_lib_utils_ts",
+      "target": "utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "readme_nextjs_project",
+      "_tgt": "plan_bun_elysia_microsaas_lava_jatos",
+      "source": "readme_nextjs_project",
+      "target": "plan_bun_elysia_microsaas_lava_jatos"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_microsaas_lava_jatos",
+      "_tgt": "plan_bun_elysia_tech_stack",
+      "source": "plan_bun_elysia_microsaas_lava_jatos",
+      "target": "plan_bun_elysia_tech_stack"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_microsaas_lava_jatos",
+      "_tgt": "plan_bun_elysia_db_schema",
+      "source": "plan_bun_elysia_microsaas_lava_jatos",
+      "target": "plan_bun_elysia_db_schema"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_microsaas_lava_jatos",
+      "_tgt": "plan_bun_elysia_api_design",
+      "source": "plan_bun_elysia_microsaas_lava_jatos",
+      "target": "plan_bun_elysia_api_design"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_microsaas_lava_jatos",
+      "_tgt": "plan_bun_elysia_implementation_plan",
+      "source": "plan_bun_elysia_microsaas_lava_jatos",
+      "target": "plan_bun_elysia_implementation_plan"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "plan_bun_elysia_project_definition",
+      "label": "Project Specification",
+      "nodes": [
+        "plan_bun_elysia_tech_stack",
+        "plan_bun_elysia_db_schema",
+        "plan_bun_elysia_api_design",
+        "plan_bun_elysia_implementation_plan"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md"
+    }
+  ]
+}
