@@ -42,29 +42,34 @@ O implementador deve justificar brevemente a escolha no README.
 
 ## Tech Stack
 
-| Camada    | Tecnologia                                                    | Justificativa                                             |
-| --------- | ------------------------------------------------------------- | --------------------------------------------------------- |
-| Framework | Next.js 15 (App Router)                                       | Full-stack em um projeto, SSR, API Routes, versao estavel |
-| Pacote    | Bun                                                           | Mais rápido e fácil que NPM, pnpm                         |
-| API       | Elysia                                                        | Melhor que fastify, Express e nestjs                      |
-| Linguagem | TypeScript 5                                                  | Type safety ponta a ponta                                 |
-| Banco     | PostgreSQL 17                                                 | Robusto para dados de negocio                             |
-| ORM       | Prisma 7                                                      | Migrations, seeding, tipos gerados                        |
-| Auth      | NextAuth v5 (Auth.js)                                         | Integrado ao Next.js, JWT, roles                          |
-| Validacao | Zod 4                                                         | Schemas compartilhados frontend/backend                   |
-| UI        | Tailwind CSS 4 + shadcn/ui                                    | Desenvolvimento rapido, componentes acessiveis            |
-| Fontes    | Fontes e Tgipologia Google do Tipo Tailwind CSS 4 + shadcn/ui | Desenvolvimento rapido, componentes acessiveis            |
-
-| Data Fetching | TanStack React Query 5 | Cache, optimistic updates |
-| Forms | React Hook Form + Zod | Forms performaticos com validacao |
-| Upload | Local (dev) / S3-compatible via MinIO (prod) | Abstraction layer |
-| PDF | @react-pdf/renderer | Contratos e orcamentos |
-| Graficos | Recharts | Relatorios |
-| Container | Docker + Docker Compose | Deploy simplificado |
+| Camada          | Tecnologia                                           | Justificativa                                                                |
+| --------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Framework       | Next.js 15 (App Router)                              | Frontend moderno com SSR, Server Components e estrutura pronta para producao |
+| UI              | shadcn/ui + Tailwind CSS                             | Desenvolvimento rapido, componentes acessiveis e consistencia visual         |
+| Fontes          | Google Font Inter                                    | Tipografia limpa, legivel e adequada para SaaS moderno                       |
+| Frontend Visual | Background com linhas verticais e horizontais + blur | Identidade visual moderna, leve e reutilizavel nas telas principais          |
+| Pacote          | Bun                                                  | Mais rapido e simples no lugar de npm                                        |
+| Backend/API     | Elysia                                               | Camada de API dedicada, performatica e tipada, no lugar de Express           |
+| Linguagem       | TypeScript 5                                         | Type safety ponta a ponta                                                    |
+| Banco           | PostgreSQL 17                                        | Robusto para dados de negocio                                                |
+| ORM             | Drizzle ORM                                          | Schema tipado, migrations SQL-first e integracao direta com PostgreSQL       |
+| Auth            | NextAuth v5 (Auth.js)                                | Integrado ao ecossistema Next.js, JWT, roles                                 |
+| Validacao       | Zod 4                                                | Schemas compartilhados frontend/backend                                      |
+| Data Fetching   | TanStack React Query 5                               | Cache, invalidation e optimistic updates                                     |
+| Forms           | React Hook Form + Zod                                | Forms performaticos com validacao                                            |
+| Upload          | Local (dev) / S3-compatible via MinIO (prod)         | Abstraction layer                                                            |
+| PDF             | @react-pdf/renderer                                  | Contratos e orcamentos                                                       |
+| Graficos        | Recharts                                             | Relatorios                                                                   |
+| Container       | Docker Compose                                       | Orquestracao simples com servicos `app`, `db` e `minio`                      |
+| Ambiente        | `.env`                                               | Variaveis centralizadas usadas pelo Docker Compose e pelo Drizzle ORM        |
 
 **Decisoes chave**:
 
-- Monolito Next.js (nao microservicos). Adequado para a escala de um micro-SaaS.
+- Frontend em Next.js com App Router, shadcn/ui, Tailwind, Inter e background visual com grid de linhas + blur.
+- Backend/API separado com Elysia, em vez de Express.
+- Gerenciador de pacotes com Bun, em vez de npm.
+- Persistencia com PostgreSQL + Drizzle ORM, usando `.env` compartilhado com `docker-compose.yml`.
+- Servico do PostgreSQL no `docker-compose.yml` deve se chamar `db`.
 - Codigo fonte em ingles (variaveis, funcoes, comentarios). UI em portugues brasileiro.
 - Features extras serao escolhidas pelo implementador (ver secao acima).
 
@@ -74,30 +79,31 @@ O implementador deve justificar brevemente a escolha no README.
 
 ```
 projeto/
-├── .env.example
+├── .env
 ├── docker-compose.yml
 ├── Dockerfile
 ├── DEPLOY.md
+├── drizzle.config.ts
 ├── next.config.ts
 ├── package.json
 ├── tsconfig.json
-├── prisma/
-│   ├── schema.prisma
+├── drizzle/
+│   ├── schema.ts
 │   ├── migrations/
 │   └── seed.ts
 ├── public/
-│   └── uploads/            # Dev file storage
+│   └── uploads/                 # Dev file storage
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx      # Root layout (providers)
-│   │   ├── page.tsx        # Redirect to dashboard
+│   │   ├── layout.tsx           # Root layout (providers + Inter + background visual)
+│   │   ├── page.tsx             # Redirect to dashboard
 │   │   ├── globals.css
 │   │   ├── (auth)/
 │   │   │   ├── login/page.tsx
 │   │   │   └── layout.tsx
 │   │   ├── (dashboard)/
-│   │   │   ├── layout.tsx  # Sidebar + header
-│   │   │   ├── page.tsx    # Dashboard home (KPIs)
+│   │   │   ├── layout.tsx       # Sidebar + header
+│   │   │   ├── page.tsx         # Dashboard home (KPIs)
 │   │   │   ├── inventario/
 │   │   │   ├── orcamentos/
 │   │   │   ├── contratos/
@@ -107,46 +113,51 @@ projeto/
 │   │   │   ├── funcionarios/
 │   │   │   ├── relatorios/
 │   │   │   └── configuracoes/
-│   │   ├── fila/[slug]/    # Pagina PUBLICA de fila
+│   │   ├── fila/[slug]/         # Pagina PUBLICA de fila
 │   │   │   └── page.tsx
-│   │   └── api/            # Route Handlers
-│   │       ├── auth/[...nextauth]/
-│   │       ├── inventario/
-│   │       ├── orcamentos/
-│   │       ├── contratos/
-│   │       ├── servicos/
-│   │       ├── fila/
-│   │       ├── clientes/
-│   │       ├── funcionarios/
-│   │       ├── relatorios/
-│   │       ├── upload/
-│   │       └── configuracoes/
+│   │   └── api/                 # Proxy/bridge quando necessario
 │   ├── components/
-│   │   ├── ui/             # shadcn/ui
-│   │   ├── layout/         # sidebar, header, mobile-nav
-│   │   ├── forms/          # formularios por entidade
-│   │   ├── tables/         # DataTable reutilizavel
-│   │   ├── charts/         # graficos de relatorios
-│   │   ├── queue/          # board de fila
-│   │   └── shared/         # file-upload, signature-pad, status-badge
+│   │   ├── ui/                  # shadcn/ui
+│   │   ├── layout/              # sidebar, header, mobile-nav
+│   │   ├── forms/               # formularios por entidade
+│   │   ├── tables/              # DataTable reutilizavel
+│   │   ├── charts/              # graficos de relatorios
+│   │   ├── queue/               # board de fila
+│   │   └── shared/              # file-upload, signature-pad, status-badge
 │   ├── lib/
-│   │   ├── prisma.ts       # Singleton
-│   │   ├── auth.ts         # NextAuth config
-│   │   ├── storage.ts      # Abstracao local/S3
-│   │   ├── pdf.ts          # Geracao de PDF
+│   │   ├── db.ts                # Drizzle client
+│   │   ├── auth.ts              # NextAuth config
+│   │   ├── storage.ts           # Abstracao local/S3
+│   │   ├── pdf.ts               # Geracao de PDF
 │   │   ├── utils.ts
 │   │   ├── constants.ts
-│   │   └── validations/    # Zod schemas por entidade
-│   ├── hooks/              # React Query hooks por entidade
+│   │   └── validations/         # Zod schemas por entidade
+│   ├── hooks/                   # React Query hooks por entidade
+│   ├── server/
+│   │   ├── index.ts             # Bootstrap do Elysia
+│   │   ├── plugins/
+│   │   ├── middleware/
+│   │   └── routes/
+│   │       ├── auth.ts
+│   │       ├── inventario.ts
+│   │       ├── orcamentos.ts
+│   │       ├── contratos.ts
+│   │       ├── servicos.ts
+│   │       ├── fila.ts
+│   │       ├── clientes.ts
+│   │       ├── funcionarios.ts
+│   │       ├── relatorios.ts
+│   │       ├── upload.ts
+│   │       └── configuracoes.ts
 │   ├── types/
-│   └── middleware.ts       # Protecao de rotas
+│   └── middleware.ts            # Protecao de rotas no frontend
 └── scripts/
     └── seed.ts
 ```
 
 ---
 
-## Schema do Banco (Prisma)
+## Schema do Banco (Drizzle ORM)
 
 ### Modelos principais
 
@@ -228,7 +239,7 @@ Erro:    { success: false, error: { code, message, details? } }
 - Sessao via JWT (stateless)
 - bcryptjs para hash de senha (12 rounds)
 - Middleware protege rotas automaticamente
-- Helper `requireRole(session, 'MANAGER')` nos Route Handlers
+- Helper `requireRole(session, 'MANAGER')` nos handlers protegidos
 - Sidebar condicional baseada em `session.user.role`
 
 ---
@@ -237,7 +248,7 @@ Erro:    { success: false, error: { code, message, details? } }
 
 - Abstraction layer em `src/lib/storage.ts` com interface StorageProvider
 - Dev: filesystem local (`/public/uploads/`)
-- Prod: MinIO (S3-compatible) via Docker
+- Prod: MinIO (S3-compatible) via Docker Compose
 - Validacao: tipos permitidos (jpg, png, webp, pdf), max 10MB
 - Nomes unicos com CUID
 
@@ -263,17 +274,18 @@ Erro:    { success: false, error: { code, message, details? } }
 
 ### Fase 0: Bootstrap (sequencial, 1 agente)
 
-1. `npx create-next-app` com TypeScript, Tailwind, App Router
-2. Instalar todas as dependencias
-3. Configurar Prisma com schema completo
-4. Docker Compose (Postgres + MinIO)
-5. `.env.example`
+1. `bun create next-app` com TypeScript, Tailwind e App Router
+2. Instalar todas as dependencias com Bun
+3. Configurar Drizzle ORM com schema completo
+4. Configurar `docker-compose.yml` com servicos `app`, `db` e `minio`
+5. Configurar `.env` com variaveis compartilhadas entre Docker Compose e Drizzle
 6. Criar estrutura de diretorios
-7. `src/lib/prisma.ts`, `src/lib/utils.ts`
+7. `src/lib/db.ts`, `src/lib/utils.ts`
 8. Inicializar shadcn/ui
-9. Rodar migration inicial
+9. Rodar migration inicial com Drizzle
 10. Criar layouts base (root, dashboard skeleton, auth)
-11. Criar componente DataTable reutilizavel (dependencia compartilhada)
+11. Aplicar Inter e background com linhas verticais/horizontais + blur
+12. Criar componente DataTable reutilizavel (dependencia compartilhada)
 
 ### Fase 1: 6 agentes em paralelo
 
@@ -318,8 +330,8 @@ Erro:    { success: false, error: { code, message, details? } }
 - Storage abstraction layer
 - API de upload + componente FileUpload
 - Script de seed completo
-- Dockerfile multi-stage
-- docker-compose.yml
+- Dockerfile multi-stage com Bun
+- `docker-compose.yml`
 - DEPLOY.md com instrucoes passo a passo
 
 ### Fase 2: Integracao (sequencial, 1 agente)
@@ -336,15 +348,15 @@ Erro:    { success: false, error: { code, message, details? } }
 
 ## Deploy (Producao)
 
-Docker Compose com 3 servicos: app, postgres, minio.
+Docker Compose com 3 servicos: app, db, minio.
 
 Passos:
 
 1. Clonar repositorio
-2. Copiar `.env.example` para `.env`, preencher secrets
+2. Preencher o arquivo `.env`
 3. `docker compose up -d`
-4. `docker compose exec app npx prisma migrate deploy`
-5. `docker compose exec app npx prisma db seed` (opcional)
+4. `docker compose exec app bunx drizzle-kit migrate`
+5. `docker compose exec app bun run drizzle/seed.ts` (opcional)
 6. Configurar reverse proxy (nginx/Caddy) com SSL
 7. Apontar dominio para o servidor
 
@@ -353,7 +365,7 @@ Passos:
 ## Verificacao
 
 1. `docker compose up -d` sobe todos os servicos
-2. `npx prisma db seed` carrega dados de teste
+2. `bun run drizzle/seed.ts` carrega dados de teste
 3. Acessar `http://localhost:3000/login` e logar como admin (credenciais do seed)
 4. Navegar por todas as paginas do dashboard
 5. Criar um orcamento, gerar PDF
