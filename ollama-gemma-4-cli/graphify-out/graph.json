@@ -16,6 +16,32 @@
         "confidence": "EXTRACTED",
         "confidence_score": 1.0,
         "source_file": "plan-bun-elysia.md"
+      },
+      {
+        "id": "project_definition_core",
+        "label": "Project Definition Core",
+        "nodes": [
+          "prd_vision",
+          "spec_tech_stack",
+          "sdd_architecture"
+        ],
+        "relation": "form",
+        "confidence": "INFERRED",
+        "confidence_score": 0.9,
+        "source_file": "docs/PRD.md"
+      },
+      {
+        "id": "technical_blueprint",
+        "label": "Technical Blueprint",
+        "nodes": [
+          "spec_tech_stack",
+          "spec_api_format",
+          "sdd_data_model"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "docs/spec.md"
       }
     ]
   },
@@ -26,17 +52,8 @@
       "source_file": "postcss.config.mjs",
       "source_location": "L1",
       "id": "postcss_config_mjs",
-      "community": 5,
+      "community": 14,
       "norm_label": "postcss.config.mjs"
-    },
-    {
-      "label": "next-env.d.ts",
-      "file_type": "code",
-      "source_file": "next-env.d.ts",
-      "source_location": "L1",
-      "id": "next_env_d_ts",
-      "community": 6,
-      "norm_label": "next-env.d.ts"
     },
     {
       "label": "drizzle.config.ts",
@@ -44,7 +61,7 @@
       "source_file": "drizzle.config.ts",
       "source_location": "L1",
       "id": "drizzle_config_ts",
-      "community": 7,
+      "community": 15,
       "norm_label": "drizzle.config.ts"
     },
     {
@@ -53,7 +70,7 @@
       "source_file": "eslint.config.mjs",
       "source_location": "L1",
       "id": "eslint_config_mjs",
-      "community": 8,
+      "community": 16,
       "norm_label": "eslint.config.mjs"
     },
     {
@@ -62,8 +79,26 @@
       "source_file": "next.config.ts",
       "source_location": "L1",
       "id": "next_config_ts",
-      "community": 9,
+      "community": 17,
       "norm_label": "next.config.ts"
+    },
+    {
+      "label": "middleware.ts",
+      "file_type": "code",
+      "source_file": "src/middleware.ts",
+      "source_location": "L1",
+      "id": "src_middleware_ts",
+      "community": 6,
+      "norm_label": "middleware.ts"
+    },
+    {
+      "label": "middleware()",
+      "file_type": "code",
+      "source_file": "src/middleware.ts",
+      "source_location": "L4",
+      "id": "middleware_middleware",
+      "community": 6,
+      "norm_label": "middleware()"
     },
     {
       "label": "layout.tsx",
@@ -71,7 +106,7 @@
       "source_file": "src/app/layout.tsx",
       "source_location": "L1",
       "id": "src_app_layout_tsx",
-      "community": 2,
+      "community": 7,
       "norm_label": "layout.tsx"
     },
     {
@@ -80,7 +115,7 @@
       "source_file": "src/app/layout.tsx",
       "source_location": "L12",
       "id": "layout_rootlayout",
-      "community": 2,
+      "community": 7,
       "norm_label": "rootlayout()"
     },
     {
@@ -89,8 +124,107 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "id": "src_app_page_tsx",
-      "community": 10,
+      "community": 8,
       "norm_label": "page.tsx"
+    },
+    {
+      "label": "Page()",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L3",
+      "id": "page_page",
+      "community": 8,
+      "norm_label": "page()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/\\(auth\\)/login/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_auth_login_page_tsx",
+      "community": 5,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "onSubmit()",
+      "file_type": "code",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L35",
+      "id": "page_onsubmit",
+      "community": 5,
+      "norm_label": "onsubmit()"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "src/app/\\(dashboard\\)/layout.tsx",
+      "source_location": "L1",
+      "id": "src_app_dashboard_layout_tsx",
+      "community": 18,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/\\(dashboard\\)/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_dashboard_page_tsx",
+      "community": 9,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "DashboardPage()",
+      "file_type": "code",
+      "source_file": "src/app/\\(dashboard\\)/page.tsx",
+      "source_location": "L3",
+      "id": "page_dashboardpage",
+      "community": 9,
+      "norm_label": "dashboardpage()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/auth/[...nextauth]/route.ts",
+      "source_location": "L1",
+      "id": "src_app_api_auth_nextauth_route_ts",
+      "community": 19,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L1",
+      "id": "src_app_login_page_tsx",
+      "community": 5,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/server/index.ts",
+      "source_location": "L1",
+      "id": "src_server_index_ts",
+      "community": 20,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "card.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/card.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_card_tsx",
+      "community": 10,
+      "norm_label": "card.tsx"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "src/components/ui/card.tsx",
+      "source_location": "L4",
+      "id": "card_cn",
+      "community": 10,
+      "norm_label": "cn()"
     },
     {
       "label": "table.tsx",
@@ -98,7 +232,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L1",
       "id": "src_components_ui_table_tsx",
-      "community": 1,
+      "community": 3,
       "norm_label": "table.tsx"
     },
     {
@@ -107,7 +241,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L7",
       "id": "table_table",
-      "community": 1,
+      "community": 3,
       "norm_label": "table()"
     },
     {
@@ -116,7 +250,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L22",
       "id": "table_tableheader",
-      "community": 1,
+      "community": 3,
       "norm_label": "tableheader()"
     },
     {
@@ -125,7 +259,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L32",
       "id": "table_tablebody",
-      "community": 1,
+      "community": 3,
       "norm_label": "tablebody()"
     },
     {
@@ -134,7 +268,7 @@
       "source_file": "src/components/ui/table.tsx",
       "source_location": "L46",
       "id": "table_cn",
-      "community": 1,
+      "community": 3,
       "norm_label": "cn()"
     },
     {
@@ -143,7 +277,7 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L1",
       "id": "src_components_ui_button_tsx",
-      "community": 3,
+      "community": 11,
       "norm_label": "button.tsx"
     },
     {
@@ -152,8 +286,80 @@
       "source_file": "src/components/ui/button.tsx",
       "source_location": "L52",
       "id": "button_cn",
-      "community": 3,
+      "community": 11,
       "norm_label": "cn()"
+    },
+    {
+      "label": "input.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/input.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_input_tsx",
+      "community": 21,
+      "norm_label": "input.tsx"
+    },
+    {
+      "label": "form.tsx",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L1",
+      "id": "src_components_ui_form_tsx",
+      "community": 0,
+      "norm_label": "form.tsx"
+    },
+    {
+      "label": "Form()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L4",
+      "id": "form_form",
+      "community": 0,
+      "norm_label": "form()"
+    },
+    {
+      "label": "FormControl()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L9",
+      "id": "form_formcontrol",
+      "community": 0,
+      "norm_label": "formcontrol()"
+    },
+    {
+      "label": "FormField()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L14",
+      "id": "form_formfield",
+      "community": 0,
+      "norm_label": "formfield()"
+    },
+    {
+      "label": "FormItem()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L19",
+      "id": "form_formitem",
+      "community": 0,
+      "norm_label": "formitem()"
+    },
+    {
+      "label": "FormLabel()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L24",
+      "id": "form_formlabel",
+      "community": 0,
+      "norm_label": "formlabel()"
+    },
+    {
+      "label": "FormMessage()",
+      "file_type": "code",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L29",
+      "id": "form_formmessage",
+      "community": 0,
+      "norm_label": "formmessage()"
     },
     {
       "label": "data-table.tsx",
@@ -161,8 +367,26 @@
       "source_file": "src/components/tables/data-table.tsx",
       "source_location": "L1",
       "id": "src_components_tables_data_table_tsx",
-      "community": 11,
+      "community": 22,
       "norm_label": "data-table.tsx"
+    },
+    {
+      "label": "sidebar.tsx",
+      "file_type": "code",
+      "source_file": "src/components/layout/sidebar.tsx",
+      "source_location": "L1",
+      "id": "src_components_layout_sidebar_tsx",
+      "community": 12,
+      "norm_label": "sidebar.tsx"
+    },
+    {
+      "label": "Sidebar()",
+      "file_type": "code",
+      "source_file": "src/components/layout/sidebar.tsx",
+      "source_location": "L29",
+      "id": "sidebar_sidebar",
+      "community": 12,
+      "norm_label": "sidebar()"
     },
     {
       "label": "utils.ts",
@@ -170,7 +394,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L1",
       "id": "src_lib_utils_ts",
-      "community": 4,
+      "community": 13,
       "norm_label": "utils.ts"
     },
     {
@@ -179,7 +403,7 @@
       "source_file": "src/lib/utils.ts",
       "source_location": "L4",
       "id": "utils_cn",
-      "community": 4,
+      "community": 13,
       "norm_label": "cn()"
     },
     {
@@ -188,8 +412,17 @@
       "source_file": "src/lib/db.ts",
       "source_location": "L1",
       "id": "src_lib_db_ts",
-      "community": 12,
+      "community": 23,
       "norm_label": "db.ts"
+    },
+    {
+      "label": "auth.ts",
+      "file_type": "code",
+      "source_file": "src/lib/auth.ts",
+      "source_location": "L1",
+      "id": "src_lib_auth_ts",
+      "community": 24,
+      "norm_label": "auth.ts"
     },
     {
       "label": "schema.ts",
@@ -197,7 +430,7 @@
       "source_file": "drizzle/schema.ts",
       "source_location": "L1",
       "id": "drizzle_schema_ts",
-      "community": 13,
+      "community": 25,
       "norm_label": "schema.ts"
     },
     {
@@ -210,7 +443,7 @@
       "author": null,
       "contributor": null,
       "id": "readme_nextjs_project",
-      "community": 0,
+      "community": 1,
       "norm_label": "next.js project"
     },
     {
@@ -223,7 +456,7 @@
       "author": null,
       "contributor": null,
       "id": "plan_bun_elysia_microsaas_lava_jatos",
-      "community": 0,
+      "community": 1,
       "norm_label": "micro-saas para lava-jatos"
     },
     {
@@ -236,7 +469,7 @@
       "author": null,
       "contributor": null,
       "id": "plan_bun_elysia_tech_stack",
-      "community": 0,
+      "community": 2,
       "norm_label": "tech stack"
     },
     {
@@ -249,7 +482,7 @@
       "author": null,
       "contributor": null,
       "id": "plan_bun_elysia_db_schema",
-      "community": 0,
+      "community": 1,
       "norm_label": "database schema"
     },
     {
@@ -262,7 +495,7 @@
       "author": null,
       "contributor": null,
       "id": "plan_bun_elysia_api_design",
-      "community": 0,
+      "community": 1,
       "norm_label": "api design"
     },
     {
@@ -275,11 +508,166 @@
       "author": null,
       "contributor": null,
       "id": "plan_bun_elysia_implementation_plan",
-      "community": 0,
+      "community": 1,
       "norm_label": "implementation plan"
+    },
+    {
+      "label": "Project Vision",
+      "file_type": "document",
+      "source_file": "docs/PRD.md",
+      "source_location": "## 1. Vis\u00e3o Geral",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prd_vision",
+      "community": 4,
+      "norm_label": "project vision"
+    },
+    {
+      "label": "User Personas",
+      "file_type": "document",
+      "source_file": "docs/PRD.md",
+      "source_location": "## 2. Personas",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prd_personas",
+      "community": 4,
+      "norm_label": "user personas"
+    },
+    {
+      "label": "Core Features",
+      "file_type": "document",
+      "source_file": "docs/PRD.md",
+      "source_location": "### 3.1 Core Features",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "prd_core_features",
+      "community": 4,
+      "norm_label": "core features"
+    },
+    {
+      "label": "Detailed Tech Stack",
+      "file_type": "document",
+      "source_file": "docs/spec.md",
+      "source_location": "## 1. Stack Tecnol\u00f3gica Detalhada",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "spec_tech_stack",
+      "community": 2,
+      "norm_label": "detailed tech stack"
+    },
+    {
+      "label": "API Response Format",
+      "file_type": "document",
+      "source_file": "docs/spec.md",
+      "source_location": "### 2.3 API Response Format",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "spec_api_format",
+      "community": 1,
+      "norm_label": "api response format"
+    },
+    {
+      "label": "System Architecture",
+      "file_type": "document",
+      "source_file": "docs/SDD.md",
+      "source_location": "## 1. Arquitetura do Sistema",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sdd_architecture",
+      "community": 2,
+      "norm_label": "system architecture"
+    },
+    {
+      "label": "Data Model",
+      "file_type": "document",
+      "source_file": "docs/SDD.md",
+      "source_location": "## 2. Modelo de Dados (Schema)",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sdd_data_model",
+      "community": 1,
+      "norm_label": "data model"
+    },
+    {
+      "label": "Auth Strategy",
+      "file_type": "document",
+      "source_file": "docs/SDD.md",
+      "source_location": "## 4. Estrat\u00e9gia de Autentica\u00e7\u00e3o e Autoriza\u00e7\u00e3o",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sdd_auth_strategy",
+      "community": 2,
+      "norm_label": "auth strategy"
+    },
+    {
+      "label": "Real-time Queue Flow",
+      "file_type": "document",
+      "source_file": "docs/SDD.md",
+      "source_location": "## 5. Fluxo de Dados: Fila em Tempo Real",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "sdd_queue_flow",
+      "community": 4,
+      "norm_label": "real-time queue flow"
+    },
+    {
+      "label": "Implementation Plan",
+      "file_type": "document",
+      "source_file": "plan-bun-elysia.md",
+      "source_location": "## Plano de Implementacao (Subagentes)",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "plan_bun_elysia_impl_plan",
+      "community": 2,
+      "norm_label": "implementation plan"
+    },
+    {
+      "label": "Project Guidelines",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "## Development Guidelines",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "claude_overview",
+      "community": 2,
+      "norm_label": "project guidelines"
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/middleware.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_middleware_ts",
+      "_tgt": "middleware_middleware",
+      "source": "src_middleware_ts",
+      "target": "middleware_middleware",
+      "confidence_score": 1.0
+    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -290,6 +678,66 @@
       "_tgt": "layout_rootlayout",
       "source": "src_app_layout_tsx",
       "target": "layout_rootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "src_app_page_tsx",
+      "_tgt": "page_page",
+      "source": "src_app_page_tsx",
+      "target": "page_page",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/\\(auth\\)/login/page.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "src_app_auth_login_page_tsx",
+      "_tgt": "page_onsubmit",
+      "source": "src_app_auth_login_page_tsx",
+      "target": "page_onsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/login/page.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "src_app_login_page_tsx",
+      "_tgt": "page_onsubmit",
+      "source": "page_onsubmit",
+      "target": "src_app_login_page_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/\\(dashboard\\)/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "src_app_dashboard_page_tsx",
+      "_tgt": "page_dashboardpage",
+      "source": "src_app_dashboard_page_tsx",
+      "target": "page_dashboardpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/card.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_components_ui_card_tsx",
+      "_tgt": "card_cn",
+      "source": "src_components_ui_card_tsx",
+      "target": "card_cn",
       "confidence_score": 1.0
     },
     {
@@ -350,6 +798,90 @@
       "_tgt": "button_cn",
       "source": "src_components_ui_button_tsx",
       "target": "button_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_form",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_form",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_formcontrol",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_formcontrol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_formfield",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_formfield",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_formitem",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_formitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_formlabel",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_formlabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/ui/form.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "src_components_ui_form_tsx",
+      "_tgt": "form_formmessage",
+      "source": "src_components_ui_form_tsx",
+      "target": "form_formmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/layout/sidebar.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "src_components_layout_sidebar_tsx",
+      "_tgt": "sidebar_sidebar",
+      "source": "src_components_layout_sidebar_tsx",
+      "target": "sidebar_sidebar",
       "confidence_score": 1.0
     },
     {
@@ -423,6 +955,126 @@
       "_tgt": "plan_bun_elysia_implementation_plan",
       "source": "plan_bun_elysia_microsaas_lava_jatos",
       "target": "plan_bun_elysia_implementation_plan"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_tech_stack",
+      "_tgt": "spec_tech_stack",
+      "source": "plan_bun_elysia_tech_stack",
+      "target": "spec_tech_stack"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "plan-bun-elysia.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "plan_bun_elysia_impl_plan",
+      "_tgt": "plan_bun_elysia_tech_stack",
+      "source": "plan_bun_elysia_tech_stack",
+      "target": "plan_bun_elysia_impl_plan"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "docs/SDD.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "sdd_data_model",
+      "_tgt": "plan_bun_elysia_db_schema",
+      "source": "plan_bun_elysia_db_schema",
+      "target": "sdd_data_model"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "docs/spec.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "spec_api_format",
+      "_tgt": "plan_bun_elysia_api_design",
+      "source": "plan_bun_elysia_api_design",
+      "target": "spec_api_format"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PRD.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "prd_vision",
+      "_tgt": "prd_core_features",
+      "source": "prd_vision",
+      "target": "prd_core_features"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/PRD.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "prd_personas",
+      "_tgt": "prd_core_features",
+      "source": "prd_personas",
+      "target": "prd_core_features"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/SDD.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "sdd_queue_flow",
+      "_tgt": "prd_core_features",
+      "source": "prd_core_features",
+      "target": "sdd_queue_flow"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/spec.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "spec_tech_stack",
+      "_tgt": "sdd_architecture",
+      "source": "spec_tech_stack",
+      "target": "sdd_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/SDD.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "sdd_auth_strategy",
+      "_tgt": "spec_tech_stack",
+      "source": "spec_tech_stack",
+      "target": "sdd_auth_strategy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0,
+      "_src": "claude_overview",
+      "_tgt": "plan_bun_elysia_impl_plan",
+      "source": "plan_bun_elysia_impl_plan",
+      "target": "claude_overview"
     }
   ],
   "hyperedges": [
@@ -439,6 +1091,32 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "plan-bun-elysia.md"
+    },
+    {
+      "id": "project_definition_core",
+      "label": "Project Definition Core",
+      "nodes": [
+        "prd_vision",
+        "spec_tech_stack",
+        "sdd_architecture"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "docs/PRD.md"
+    },
+    {
+      "id": "technical_blueprint",
+      "label": "Technical Blueprint",
+      "nodes": [
+        "spec_tech_stack",
+        "spec_api_format",
+        "sdd_data_model"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/spec.md"
     }
   ]
 }
